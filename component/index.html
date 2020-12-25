@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vue Component</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<!-- 	<link rel="shortcut icon" href="img/logo.png"> -->
+	<style>
+	</style>
+</head>
+<body>
+	<div id="app">
+		<btn-counter></btn-counter>
+		<btn-counter></btn-counter>
+		<blog-post title="Hello Vue JS"></blog-post>
+		<blog-post title="Hello Han"></blog-post>
+		<child-btn @childbtn="parentBtn"></child-btn>
+	</div>
+
+	<!-- vue script -->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0/dist/vue.js"></script>
+	<script>
+		//create component
+		Vue.component('btn-counter',{
+			data(){
+				return{
+					counter: 0,
+					nama: String
+				}
+			},
+			template: `
+			<div>
+			<button type="button" class="btn btn-primary" @click="counter++">tambah +1</button> <span>{{counter}}</span>
+			</div>
+			`
+		}),
+		Vue.component('blog-post',{
+			props:['title'],
+			template: `
+			<p>{{title}}</p>
+			`
+		}),
+		Vue.component('child-btn',{
+			template:`
+			<div>
+			<button @click="child">Button Child</button>
+			</div>`,
+			methods:{
+				child(){
+					this.$emit('childbtn')
+				}
+			}
+		})
+		const app = new Vue({
+			el:'#app',
+			data: {
+
+			},
+			methods:{
+				parentBtn(){
+					console.log('hello child component')
+				}
+			},
+			computed: {
+			}			
+		})
+	</script>
+</body>
+</html>
